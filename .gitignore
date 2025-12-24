@@ -1,0 +1,16 @@
+# Build folders
+**/target/
+
+# IntelliJ / IDE
+**/.idea/
+**/*.iml
+
+# Logs
+**/*.log
+
+# Environment files
+.env
+
+# OS files
+.DS_Store
+Thumbs.db

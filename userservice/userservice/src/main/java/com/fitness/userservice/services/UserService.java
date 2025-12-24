@@ -1,0 +1,67 @@
+package com.fitness.userservice.services;
+
+import com.fitness.userservice.dto.RegisterRequest;
+import com.fitness.userservice.dto.UserResponse;
+import com.fitness.userservice.models.User;
+import com.fitness.userservice.repository.UserRepository;
+import lombok.AllArgsConstructor;
+//import org.springframework.security.crypto.password.PasswordEncoder;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
+
+@AllArgsConstructor
+@Service
+@Slf4j
+public class UserService {
+
+    private final UserRepository userRepository;
+    //private final PasswordEncoder passwordEncoder;
+
+    public UserResponse register(RegisterRequest request) {
+
+        if(userRepository.existsByEmail(request.getEmail())){
+            throw new RuntimeException("user email already exist !!");
+        }
+
+        User user =new User();
+        user.setEmail(request.getEmail());
+        user.setFirstName(request.getFirstName());
+        user.setLastName(request.getLastName());
+        user.setPassword(request.getPassword());
+
+        User saveUser = userRepository.save(user);
+        UserResponse userResponse = new UserResponse();
+
+        userResponse.setId(saveUser.getId());
+        userResponse.setPassword(saveUser.getPassword());
+        //user.setPassword(passwordEncoder.encode(request.getPassword()));
+        userResponse.setEmail(saveUser.getEmail());
+        userResponse.setFirstName(saveUser.getFirstName());
+        userResponse.setLastName(saveUser.getLastName());
+        userResponse.setCreatedAt(saveUser.getCreatedAt());
+        userResponse.setUpdatedAt(saveUser.getUpdatedAt());
+        return userResponse;
+    }
+
+    public UserResponse gteUserProfile(String userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(()-> new RuntimeException(" User not found"));
+        UserResponse userResponse = new UserResponse();
+
+        userResponse.setId(user.getId());
+        userResponse.setPassword(user.getPassword());
+        //user.setPassword(passwordEncoder.encode(request.getPassword()));
+        userResponse.setEmail(user.getEmail());
+        userResponse.setFirstName(user.getFirstName());
+        userResponse.setLastName(user.getLastName());
+        userResponse.setCreatedAt(user.getCreatedAt());
+        userResponse.setUpdatedAt(user.getUpdatedAt());
+        return userResponse;
+
+    }
+
+    public Boolean existByUserId(String userId) {
+        log.info("User exist Checked done {} !", userId);
+        return userRepository.existsById(userId);
+    }
+}
