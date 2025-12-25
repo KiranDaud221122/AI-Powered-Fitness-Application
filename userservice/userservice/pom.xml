@@ -12,7 +12,7 @@
 	<artifactId>userservice</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>userservice</name>
-	<description>this service is use to manage the user data</description>
+	<description>this service is used to manage the user data</description>
 	<url/>
 	<licenses>
 		<license/>
@@ -62,6 +62,10 @@
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-config</artifactId>
         </dependency>
 
 <!--        <dependency>-->
