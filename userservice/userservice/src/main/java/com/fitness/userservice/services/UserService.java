@@ -15,17 +15,27 @@ import org.springframework.stereotype.Service;
 public class UserService {
 
     private final UserRepository userRepository;
-    //private final PasswordEncoder passwordEncoder;
 
     public UserResponse register(RegisterRequest request) {
 
         if(userRepository.existsByEmail(request.getEmail())){
-            throw new RuntimeException("user email already exist !!");
+            User ExistingUser = userRepository.findByEmail(request.getEmail());
+            UserResponse userResponse = new UserResponse();
+
+            userResponse.setId(ExistingUser.getId());
+            userResponse.setPassword(ExistingUser.getPassword());
+            userResponse.setEmail(ExistingUser.getEmail());
+            userResponse.setFirstName(ExistingUser.getFirstName());
+            userResponse.setLastName(ExistingUser.getLastName());
+            userResponse.setCreatedAt(ExistingUser.getCreatedAt());
+            userResponse.setUpdatedAt(ExistingUser.getUpdatedAt());
+            return userResponse;
         }
 
         User user =new User();
         user.setEmail(request.getEmail());
         user.setFirstName(request.getFirstName());
+        user.setKeycloakId(request.getKeycloakId());
         user.setLastName(request.getLastName());
         user.setPassword(request.getPassword());
 
@@ -34,7 +44,6 @@ public class UserService {
 
         userResponse.setId(saveUser.getId());
         userResponse.setPassword(saveUser.getPassword());
-        //user.setPassword(passwordEncoder.encode(request.getPassword()));
         userResponse.setEmail(saveUser.getEmail());
         userResponse.setFirstName(saveUser.getFirstName());
         userResponse.setLastName(saveUser.getLastName());
@@ -50,7 +59,6 @@ public class UserService {
 
         userResponse.setId(user.getId());
         userResponse.setPassword(user.getPassword());
-        //user.setPassword(passwordEncoder.encode(request.getPassword()));
         userResponse.setEmail(user.getEmail());
         userResponse.setFirstName(user.getFirstName());
         userResponse.setLastName(user.getLastName());
@@ -62,6 +70,6 @@ public class UserService {
 
     public Boolean existByUserId(String userId) {
         log.info("User exist Checked done {} !", userId);
-        return userRepository.existsById(userId);
+        return userRepository.existsByKeycloakId(userId);
     }
 }

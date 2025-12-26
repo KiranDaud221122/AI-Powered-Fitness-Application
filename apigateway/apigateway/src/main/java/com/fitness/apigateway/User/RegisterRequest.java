@@ -1,4 +1,4 @@
-package com.fitness.userservice.dto;
+package com.fitness.apigateway.User;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -16,8 +16,6 @@ public class RegisterRequest {
     @Email(message = "Invalid email format")
     private String email;
     private String keycloakId;
-
-
     @NotBlank(message = "password is required")
     @Size(min=6 , message = "password at least six characters")
     private String password;

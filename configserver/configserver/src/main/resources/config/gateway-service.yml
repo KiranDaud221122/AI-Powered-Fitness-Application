@@ -1,28 +1,37 @@
-eureka:
-  client:
-    serviceUrl:
-      defaultZone: http://localhost:8761/eureka
+server:
+  port: 8080
 
 spring:
+  application:
+    name: GATEWAY-SERVICE
+
   cloud:
     gateway:
       server:
-        webflus:
+        webflux:
           routes:
-          - id: user-service
-            uri: lb://USER-SERVICE
-            predicates:
-              - Path=/api/users/**
+            - id: user-service
+              uri: lb://USER-SERVICE
+              predicates:
+                - Path=/api/users/**
 
-          - id: activity-service
-            uri: lb://ACTIVITY-SERVICE
-            predicates:
-              - Path=/api/activity/**
+            - id: activity-service
+              uri: lb://ACTIVITY-SERVICE
+              predicates:
+                - Path=/api/activity/**
 
-          - id: ai-service
-            uri: lb://AI-SERVICE
-            predicates:
-              - Path=/api/recommendations/**
+            - id: ai-service
+              uri: lb://AI-SERVICE
+              predicates:
+                - Path=/api/recommendations/**
 
-server:
-  port: 8080
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          jwk-set-uri: http://localhost:8181/realms/fitness-app/protocol/openid-connect/certs
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
