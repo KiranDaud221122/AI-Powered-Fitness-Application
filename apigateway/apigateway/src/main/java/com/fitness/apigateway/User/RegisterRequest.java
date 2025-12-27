@@ -12,7 +12,7 @@ import lombok.Setter;
 @Setter
 public class RegisterRequest {
 
-    @NotBlank(message = "Email is required !")
+    @NotBlank(message = "Email id is required !")
     @Email(message = "Invalid email format")
     private String email;
     private String keycloakId;
