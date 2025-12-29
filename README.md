@@ -7,7 +7,13 @@
 ![Microservices](https://img.shields.io/badge/Architecture-Microservices-blue?style=for-the-badge)
 ![Status](https://img.shields.io/badge/Status-In%20Development-yellow?style=for-the-badge)
 
-**An intelligent fitness management platform powered by AI and built on enterprise-grade microservices architecture**
+**Project: AI-Driven Fitness Recommendation Platform (Microservices Architecture)**
+
+Designed and developed a Spring Boot–based microservices system consisting of User, Activity, Recommendation, AI, and API Gateway services. Implemented service discovery using Eureka Server, centralized configuration using Spring Cloud Config Server, and API routing with Spring Cloud Gateway (WebFlux).
+
+Integrated authentication and authorization using Keycloak, synchronizing internal user IDs with Keycloak IDs and storing mappings in PostgreSQL. Implemented reactive communication using WebClient with load balancing and event-driven communication between Activity and AI services using Kafka.
+
+The system provides personalized activity and user recommendations while ensuring scalability, security, and loose coupling between services.
 
 [Features](#-key-features) • [Architecture](#-system-architecture) • [Tech Stack](#-tech-stack) • [Getting Started](#-getting-started) • [API Documentation](#-api-documentation)
 
