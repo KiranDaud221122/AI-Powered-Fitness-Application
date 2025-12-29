@@ -43,7 +43,7 @@ public class ActivityAIService {
                     .replaceAll("\\n```", "")
                     .trim();
 
-//            log.info("PARSED RESPONSE FROM AI: {} ", jsonContent);
+
 
             JsonNode analysisJson = mapper.readTree(jsonContent);
             JsonNode analysisNode = analysisJson.path("analysis");
@@ -68,6 +68,7 @@ public class ActivityAIService {
                     .safety(safety)
                     .createdAt(LocalDateTime.now())
                     .build();
+
 
         } catch (Exception e) {
             e.printStackTrace();
