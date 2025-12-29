@@ -52,7 +52,7 @@ public class UserService {
         return userResponse;
     }
 
-    public UserResponse gteUserProfile(String userId) {
+    public UserResponse getUserProfile(String userId) {
         User user = userRepository.findById(userId)
                 .orElseThrow(()-> new RuntimeException(" User not found"));
         UserResponse userResponse = new UserResponse();
@@ -72,4 +72,6 @@ public class UserService {
         log.info("User exist Checked done {} !", userId);
         return userRepository.existsByKeycloakId(userId);
     }
+
+
 }

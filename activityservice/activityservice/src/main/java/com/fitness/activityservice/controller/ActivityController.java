@@ -22,4 +22,3 @@ public class ActivityController {
         return ResponseEntity.ok(activityService.trackActivity(request));
     }
 }
-

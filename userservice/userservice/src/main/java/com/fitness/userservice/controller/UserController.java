@@ -11,30 +11,25 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/users")
 @AllArgsConstructor
-
 public class UserController {
 
-    private final UserService userService;
+    private UserService userService;
 
-    //get user by I'd
     @GetMapping("/{userId}")
-    public ResponseEntity<UserResponse> gteUserProfile(@PathVariable String userId){
-        return ResponseEntity.ok(userService.gteUserProfile(userId));
+    public ResponseEntity<UserResponse> getUserProfile(@PathVariable String userId){
+        return ResponseEntity.ok(userService.getUserProfile(userId));
     }
 
-    //create new user
     @PostMapping("/register")
     public ResponseEntity<UserResponse> register(@Valid @RequestBody RegisterRequest request){
         return ResponseEntity.ok(userService.register(request));
     }
 
-    //check user is already exist or not
+
     @GetMapping("/{userId}/validate")
     public ResponseEntity<Boolean> validateUser(@PathVariable String userId){
         return ResponseEntity.ok(userService.existByUserId(userId));
     }
-
-
-
-
 }
+
+

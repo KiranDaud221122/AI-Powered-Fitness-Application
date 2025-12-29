@@ -12,12 +12,14 @@ import org.springframework.security.web.server.SecurityWebFilterChain;
 public class SecurityConfig {
 
     @Bean
-    public SecurityWebFilterChain springSecurityFilterChain(ServerHttpSecurity http){
-       return http
-               .csrf(ServerHttpSecurity.CsrfSpec::disable)
-               .authorizeExchange(exchange ->exchange.anyExchange().authenticated())
-               .oauth2ResourceServer(oauth2->oauth2.jwt(Customizer.withDefaults()))
-               .build();
-
+    public SecurityWebFilterChain springSecurityFilterChain(ServerHttpSecurity http) {
+        return http
+                .csrf(ServerHttpSecurity.CsrfSpec::disable)
+                .authorizeExchange(exchange -> exchange
+//                        .pathMatchers("/actuator/*").permitAll()
+                                .anyExchange().authenticated()
+                )
+                .oauth2ResourceServer(oauth2 -> oauth2.jwt(Customizer.withDefaults()))
+                .build();
     }
 }

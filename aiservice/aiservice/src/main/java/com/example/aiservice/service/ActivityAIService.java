@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AllArgsConstructor;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -14,38 +15,39 @@ import java.util.*;
 
 @Service
 @Slf4j
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class ActivityAIService {
-
     private final GeminiService geminiService;
 
     public Recommendations generateRecommendation(Activity activity) {
         String prompt = createPromptForActivity(activity);
-        String aiResponse = geminiService.getRecommandations(prompt);
-        log.info("RESPONSE FROM AI {} ", aiResponse);
-        return processAIResponse(activity, aiResponse);
+        String aiResponse = geminiService.getAnswer(prompt);
+        log.info("RESPONSE FROM AI: {} ", aiResponse);
+        return processAiResponse(activity, aiResponse);
     }
 
-    private Recommendations processAIResponse(Activity activity, String aiResponse) {
+    private Recommendations processAiResponse(Activity activity, String aiResponse) {
         try {
             ObjectMapper mapper = new ObjectMapper();
             JsonNode rootNode = mapper.readTree(aiResponse);
+
             JsonNode textNode = rootNode.path("candidates")
                     .get(0)
                     .path("content")
-                    .get("parts")
+                    .path("parts")
                     .get(0)
                     .path("text");
 
             String jsonContent = textNode.asText()
                     .replaceAll("```json\\n","")
-                    .replaceAll("\\n```","")
+                    .replaceAll("\\n```", "")
                     .trim();
 
-            log.info("RESPONSE FROM CLEANED AI {} ", jsonContent);
+//            log.info("PARSED RESPONSE FROM AI: {} ", jsonContent);
 
             JsonNode analysisJson = mapper.readTree(jsonContent);
             JsonNode analysisNode = analysisJson.path("analysis");
+
             StringBuilder fullAnalysis = new StringBuilder();
             addAnalysisSection(fullAnalysis, analysisNode, "overall", "Overall:");
             addAnalysisSection(fullAnalysis, analysisNode, "pace", "Pace:");
@@ -59,7 +61,7 @@ public class ActivityAIService {
             return Recommendations.builder()
                     .activityId(activity.getId())
                     .userId(activity.getUserId())
-                    .type(activity.getType().toString())
+                    .activityType(activity.getType())
                     .recommendation(fullAnalysis.toString().trim())
                     .improvements(improvements)
                     .suggestions(suggestions)
@@ -77,10 +79,10 @@ public class ActivityAIService {
         return Recommendations.builder()
                 .activityId(activity.getId())
                 .userId(activity.getUserId())
-                .type(activity.getType().toString())
+                .activityType(activity.getType())
                 .recommendation("Unable to generate detailed analysis")
                 .improvements(Collections.singletonList("Continue with your current routine"))
-                .suggestions(Collections.singletonList("Consider consulting a fitness consultant"))
+                .suggestions(Collections.singletonList("Consider consulting a fitness professional"))
                 .safety(Arrays.asList(
                         "Always warm up before exercise",
                         "Stay hydrated",
@@ -126,12 +128,10 @@ public class ActivityAIService {
         return improvements.isEmpty() ?
                 Collections.singletonList("No specific improvements provided") :
                 improvements;
-
     }
 
-
     private void addAnalysisSection(StringBuilder fullAnalysis, JsonNode analysisNode, String key, String prefix) {
-        if (!analysisNode.path(key).isMissingNode()){
+        if (!analysisNode.path(key).isMissingNode()) {
             fullAnalysis.append(prefix)
                     .append(analysisNode.path(key).asText())
                     .append("\n\n");
@@ -178,7 +178,7 @@ public class ActivityAIService {
                 activity.getType(),
                 activity.getDuration(),
                 activity.getCaloriesBurned(),
-                activity.getAdditionalMatrics()
+                activity.getAdditionalMetrics()
         );
     }
 }

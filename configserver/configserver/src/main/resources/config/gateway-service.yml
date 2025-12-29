@@ -29,7 +29,7 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-          jwk-set-uri: http://localhost:8181/realms/fitness-app/protocol/openid-connect/certs
+          jwk-set-uri: http://localhost:8181/realms/Ai-Fitness-App/protocol/openid-connect/certs
 
 eureka:
   client:

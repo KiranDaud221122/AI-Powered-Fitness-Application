@@ -13,12 +13,11 @@ import java.util.List;
 @Data
 @Builder
 public class Recommendations {
-
     @Id
     private String id;
-    private String userId;
     private String activityId;
-    private String type;
+    private String userId;
+    private String activityType;
     private String recommendation;
     private List<String> improvements;
     private List<String> suggestions;
@@ -26,9 +25,4 @@ public class Recommendations {
 
     @CreatedDate
     private LocalDateTime createdAt;
-
-
-
-
-
 }
