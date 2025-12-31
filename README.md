@@ -756,12 +756,6 @@ git push origin feature/your-feature-name
 
 # Create Pull Request on GitHub
 ```
-
-### Commit Message Convention
-
-Follow [Conventional Commits](https://www.conventionalcommits.org/):
-
-```
 feat: add new workout recommendation algorithm
 fix: resolve NPE in user service
 docs: update API documentation
@@ -833,12 +827,6 @@ Contributions are welcome! Please follow these steps:
 - Add unit tests for new features
 - Update documentation as needed
 - Ensure all tests pass before submitting PR
-
----
-
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ---
 
