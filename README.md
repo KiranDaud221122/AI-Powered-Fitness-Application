@@ -182,7 +182,12 @@ Java 17+ (LTS)
 ### Database & Storage
 - **PostgreSQL** - User Service relational database
 - **MongoDB** - Activity Service and AI Service NoSQL database (separate instances)
-- **H2** - In-memory database for development and testing
+  
+- - Why PostgreSQL + MongoDB?
+
+PostgreSQL → transactional, relational data
+MongoDB → flexible, schema-less data for experimentation
+Goal → learning polyglot persistence, not claiming production perfection
 
 ### Messaging & Integration
 - **Apache Kafka** - Event streaming between Activity Service and AI Service
