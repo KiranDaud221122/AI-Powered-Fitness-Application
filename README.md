@@ -182,7 +182,12 @@ Java 17+ (LTS)
 ### Database & Storage
 - **PostgreSQL** - User Service relational database
 - **MongoDB** - Activity Service and AI Service NoSQL database (separate instances)
-- **H2** - In-memory database for development and testing
+  
+- - Why PostgreSQL + MongoDB?
+
+PostgreSQL → transactional, relational data
+MongoDB → flexible, schema-less data for experimentation
+Goal → learning polyglot persistence, not claiming production perfection
 
 ### Messaging & Integration
 - **Apache Kafka** - Event streaming between Activity Service and AI Service
@@ -756,12 +761,6 @@ git push origin feature/your-feature-name
 
 # Create Pull Request on GitHub
 ```
-
-### Commit Message Convention
-
-Follow [Conventional Commits](https://www.conventionalcommits.org/):
-
-```
 feat: add new workout recommendation algorithm
 fix: resolve NPE in user service
 docs: update API documentation
@@ -833,12 +832,6 @@ Contributions are welcome! Please follow these steps:
 - Add unit tests for new features
 - Update documentation as needed
 - Ensure all tests pass before submitting PR
-
----
-
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ---
 
