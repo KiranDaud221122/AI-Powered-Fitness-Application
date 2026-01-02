@@ -22,7 +22,10 @@ public class RegisterRequest {
     @Size(min=6 , message = "password at least six characters")
     private String password;
 
+    @NotBlank(message = "password is required")
     private String firstName;
+
+    @NotBlank(message = "password is required")
     private String lastName;
 
 
