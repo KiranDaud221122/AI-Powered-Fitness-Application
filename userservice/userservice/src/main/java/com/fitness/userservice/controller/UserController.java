@@ -20,7 +20,6 @@ public class UserController {
         return ResponseEntity.ok(userService.register(request));
     }
 
-
     @GetMapping("/{userId}")
     public ResponseEntity<UserResponse> getUserProfile(@PathVariable String userId){
         return ResponseEntity.ok(userService.getUserProfile(userId));
@@ -30,6 +29,17 @@ public class UserController {
     public ResponseEntity<Boolean> validateUser(@PathVariable String userId){
         return ResponseEntity.ok(userService.existByUserId(userId));
     }
+
+    @PutMapping("/{userId}")
+    public ResponseEntity<UserResponse> updateUserProfile(@PathVariable String userId, @Valid @RequestBody RegisterRequest request){
+        return ResponseEntity.ok(userService.updateUserProfile(userId, request));
+    }
+
+    @DeleteMapping("/{userId}")
+    public ResponseEntity<String> deleteUser(@PathVariable String userId){
+          userService.deleteUser(userId);
+          return ResponseEntity.ok("User deleted successfully");
+      }
 }
 
 
