@@ -4,6 +4,7 @@ import com.fitness.userservice.dto.RegisterRequest;
 import com.fitness.userservice.dto.UserResponse;
 import com.fitness.userservice.models.User;
 import com.fitness.userservice.repository.UserRepository;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 //import org.springframework.security.crypto.password.PasswordEncoder;
 import lombok.extern.slf4j.Slf4j;
@@ -74,4 +75,30 @@ public class UserService {
     }
 
 
+    public UserResponse updateUserProfile(String userId, RegisterRequest request) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(()-> new RuntimeException(" User not found"));
+
+        user.setFirstName(request.getFirstName());
+        user.setLastName(request.getLastName());
+        user.setPassword(passwordEncoder.encode(request.getPassword()));
+
+        User updatedUser = userRepository.save(user);
+
+        UserResponse userResponse = new UserResponse();
+        userResponse.setId(updatedUser.getId());
+        userResponse.setPassword(updatedUser.getPassword());
+        userResponse.setEmail(updatedUser.getEmail());
+        userResponse.setFirstName(updatedUser.getFirstName());
+        userResponse.setLastName(updatedUser.getLastName());
+        userResponse.setCreatedAt(updatedUser.getCreatedAt());
+        userResponse.setUpdatedAt(updatedUser.getUpdatedAt());
+        return userResponse;
+    }
+
+    public void deleteUser(String userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(()-> new RuntimeException(" User not found"));
+        userRepository.delete(user);
+    }
 }
