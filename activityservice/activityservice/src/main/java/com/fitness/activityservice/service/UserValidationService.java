@@ -13,7 +13,7 @@ public class UserValidationService {
 
     private final WebClient userServiceWebClient;
 
-    public boolean validateUser(String userId){
+    public boolean validateUser(String userId) {
         log.info("Calling UserService for {}", userId);
         try {
             return userServiceWebClient.get()
@@ -21,12 +21,9 @@ public class UserValidationService {
                     .retrieve()
                     .bodyToMono(Boolean.class)
                     .block();
-        }
-        catch (WebClientResponseException ex){
-            ex.printStackTrace();
-
+        } catch (WebClientResponseException ex) {
+            log.error("Error while validating user: {}", ex.getMessage());
         }
         return false;
     }
-
 }

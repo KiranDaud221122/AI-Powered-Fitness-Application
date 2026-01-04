@@ -2,7 +2,6 @@ package com.example.aiservice.service;
 
 import com.example.aiservice.models.Recommendations;
 import com.example.aiservice.repository.RecommendationRepository;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

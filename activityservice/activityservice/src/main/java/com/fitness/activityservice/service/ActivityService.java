@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class ActivityService {
@@ -61,10 +63,16 @@ public class ActivityService {
         response.setUpdateAt(activity.getUpdatedAt());
         return response;
 
-
-
-
-
-
     }
+
+    public void deleteActivity(String activityId) {
+        activityRepository.deleteById(activityId);
+    }
+
+    public ActivityResponse getActivityById(String activityId) {
+        Activity activity = activityRepository.findById(activityId)
+                .orElseThrow(() -> new RuntimeException("Activity not found with id: " + activityId));
+        return mapToResponse(activity);
+    }
+
 }

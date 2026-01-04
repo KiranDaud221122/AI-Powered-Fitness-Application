@@ -27,6 +27,7 @@ public class ActivityAIService {
     }
 
     private Recommendations processAiResponse(Activity activity, String aiResponse) {
+        log.info("Processing AI response for activity ID: {}", activity.getId());
         try {
             ObjectMapper mapper = new ObjectMapper();
             JsonNode rootNode = mapper.readTree(aiResponse);
@@ -77,6 +78,8 @@ public class ActivityAIService {
     }
 
     private Recommendations createDefaultRecommendation(Activity activity) {
+        log.info("Created default recommendation for activity ID: {}", activity.getId());
+
         return Recommendations.builder()
                 .activityId(activity.getId())
                 .userId(activity.getUserId())
@@ -94,6 +97,7 @@ public class ActivityAIService {
     }
 
     private List<String> extractSafetyGuidelines(JsonNode safetyNode) {
+        log.info("Extracting safety guidelines from AI response");
         List<String> safety = new ArrayList<>();
         if (safetyNode.isArray()) {
             safetyNode.forEach(item -> safety.add(item.asText()));
@@ -104,6 +108,7 @@ public class ActivityAIService {
     }
 
     private List<String> extractSuggestions(JsonNode suggestionsNode) {
+        log.info("Extracting workout suggestions from AI response");
         List<String> suggestions = new ArrayList<>();
         if (suggestionsNode.isArray()) {
             suggestionsNode.forEach(suggestion -> {
@@ -118,6 +123,7 @@ public class ActivityAIService {
     }
 
     private List<String> extractImprovements(JsonNode improvementsNode) {
+        log.info("Extracting improvements from AI response");
         List<String> improvements = new ArrayList<>();
         if (improvementsNode.isArray()) {
             improvementsNode.forEach(improvement -> {
@@ -132,6 +138,7 @@ public class ActivityAIService {
     }
 
     private void addAnalysisSection(StringBuilder fullAnalysis, JsonNode analysisNode, String key, String prefix) {
+        log.info("Adding analysis section for key: {}", key);
         if (!analysisNode.path(key).isMissingNode()) {
             fullAnalysis.append(prefix)
                     .append(analysisNode.path(key).asText())
@@ -140,6 +147,7 @@ public class ActivityAIService {
     }
 
     private String createPromptForActivity(Activity activity) {
+        log.info("Creating prompt for activity ID: {}", activity.getId());
         return String.format("""
         Analyze this fitness activity and provide detailed recommendations in the following EXACT JSON format:
         {
